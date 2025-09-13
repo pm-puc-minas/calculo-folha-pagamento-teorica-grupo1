@@ -1,4 +1,4 @@
-# Projeto: Sistema de Gestão de Folha de Pagamento
+# Sistema de Gestão de Folha de Pagamento
 
 ## Visão Geral
 Este projeto é um sistema de gestão de folha de pagamento para um software de recursos humanos, desenvolvido como trabalho final da disciplina de Programação Modular.  
