@@ -21,7 +21,7 @@ class FolhaPagamentoTest {
     
     @Test
     @DisplayName("Cenário 1: Testar se o valor final é a subtração correta de todos os descontos (obrigatórios e opcionais) do salário bruto, após a adição de todos os proventos e benefícios")
-    void deveCalcularSalarioLiquidoCorretamente() {
+    void calculaSalarioLiquido() {
         funcionario.setTemPericulosidade(true);
         funcionario.setTemInsalubridade(true);
         funcionario.setGrauInsalubridade(Funcionario.GrauInsalubridade.BAIXO);

@@ -11,7 +11,7 @@ class InsalubridadeTest {
     
     @Test
     @DisplayName("Cenário 1: Testar o cálculo para o grau de risco baixo (10% do salário mínimo)")
-    void deveCalcularGrauBaixo() {
+    void calculaGrauBaixo() {
         Insalubridade insalubridade = new Insalubridade();
         Funcionario funcionario = new Funcionario("João Silva", "123.456.789-00", "Analista", 3000.00);
         funcionario.setTemInsalubridade(true);
@@ -24,7 +24,7 @@ class InsalubridadeTest {
     
     @Test
     @DisplayName("Cenário 2: Testar o cálculo para o grau de risco médio (20% do salário mínimo)")
-    void deveCalcularGrauMedio() {
+    void calculaGrauMedio() {
         Insalubridade insalubridade = new Insalubridade();
         Funcionario funcionario = new Funcionario("Maria Santos", "987.654.321-00", "Analista", 3000.00);
         funcionario.setTemInsalubridade(true);
@@ -37,7 +37,7 @@ class InsalubridadeTest {
     
     @Test
     @DisplayName("Cenário 3: Testar o cálculo para o grau de risco alto (40% do salário mínimo)")
-    void deveCalcularGrauAlto() {
+    void calculaGrauAlto() {
         Insalubridade insalubridade = new Insalubridade();
         Funcionario funcionario = new Funcionario("Pedro Costa", "456.789.123-00", "Analista", 3000.00);
         funcionario.setTemInsalubridade(true);
@@ -50,7 +50,7 @@ class InsalubridadeTest {
     
     @Test
     @DisplayName("Cenário 4: Garantir que o valor seja zero para um funcionário sem direito ao adicional")
-    void deveRetornarZeroQuandoNaoTemDireito() {
+    void retornaZeroSemDireito() {
         Insalubridade insalubridade = new Insalubridade();
         Funcionario funcionario = new Funcionario("Ana Lima", "789.123.456-00", "Analista", 3000.00);
         funcionario.setTemInsalubridade(false);

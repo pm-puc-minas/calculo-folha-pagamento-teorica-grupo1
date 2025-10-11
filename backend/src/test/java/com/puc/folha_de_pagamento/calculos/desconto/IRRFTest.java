@@ -11,7 +11,7 @@ class IRRFTest {
     
     @Test
     @DisplayName("Cenário 1: Testar o cálculo do imposto de renda para um funcionário sem dependentes")
-    void deveCalcularSemDependentes() {
+    void calculaSemDependentes() {
         IRRF irrf = new IRRF();
         Funcionario funcionario = new Funcionario("João Silva", "123.456.789-00", "Analista", 3000.00);
         funcionario.setNumeroDependentes(0);
@@ -23,7 +23,7 @@ class IRRFTest {
     
     @Test
     @DisplayName("Cenário 2: Testar o cálculo para um funcionário com dependentes, verificando se a dedução é aplicada corretamente")
-    void deveCalcularComDependentes() {
+    void calculaComDependentes() {
         IRRF irrf = new IRRF();
         Funcionario funcionario = new Funcionario("Maria Santos", "987.654.321-00", "Analista", 3000.00);
         funcionario.setNumeroDependentes(2);
@@ -35,7 +35,7 @@ class IRRFTest {
     
     @Test
     @DisplayName("Cenário 3: Validar se o valor do imposto é zero para um salário isento")
-    void deveRetornarZeroParaSalarioIsento() {
+    void retornaZeroParaSalarioIsento() {
         IRRF irrf = new IRRF();
         Funcionario funcionario = new Funcionario("Pedro Costa", "456.789.123-00", "Analista", 2000.00);
         funcionario.setNumeroDependentes(0);
@@ -47,7 +47,7 @@ class IRRFTest {
     
     @Test
     @DisplayName("Cenário 4: Testar se a alíquota e a dedução corretas são aplicadas para um salário na faixa máxima de contribuição")
-    void deveCalcularFaixaMaxima() {
+    void calculaFaixaMaxima() {
         IRRF irrf = new IRRF();
         Funcionario funcionario = new Funcionario("Ana Lima", "789.123.456-00", "Analista", 8000.00);
         funcionario.setNumeroDependentes(0);

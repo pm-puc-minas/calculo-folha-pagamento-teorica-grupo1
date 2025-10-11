@@ -11,7 +11,7 @@ class ValeAlimentacaoTest {
     
     @Test
     @DisplayName("Cenário 1: Verificar se o valor total do vale-alimentação é calculado corretamente com base no valor diário e nos dias úteis do mês")
-    void deveCalcularValorTotalCorretamente() {
+    void calculaValorTotal() {
         ValeAlimentacao valeAlimentacao = new ValeAlimentacao();
         Funcionario funcionario = new Funcionario("João Silva", "123.456.789-00", "Analista", 3000.00);
         funcionario.setValorValeAlimentacao(15.00);

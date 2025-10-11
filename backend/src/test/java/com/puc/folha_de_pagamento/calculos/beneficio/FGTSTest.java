@@ -11,7 +11,7 @@ class FGTSTest {
     
     @Test
     @DisplayName("Cenário 1: Testar se o cálculo corresponde a 8% do salário bruto do funcionário")
-    void deveCalcular8PorcentoDoSalarioBruto() {
+    void calcula8PorcentoDoSalario() {
         FGTS fgts = new FGTS();
         Funcionario funcionario = new Funcionario("João Silva", "123.456.789-00", "Analista", 3000.00);
         

@@ -11,7 +11,7 @@ class INSSTest {
     
     @Test
     @DisplayName("Cenário 1: Testar o cálculo progressivo do INSS para um salário que se enquadra na primeira faixa")
-    void deveCalcularPrimeiraFaixa() {
+    void calculaPrimeiraFaixa() {
         INSS inss = new INSS();
         Funcionario funcionario = new Funcionario("João Silva", "123.456.789-00", "Analista", 1200.00);
         
@@ -22,7 +22,7 @@ class INSSTest {
     
     @Test
     @DisplayName("Cenário 2: Testar o cálculo do INSS para um salário que atravessa múltiplas faixas")
-    void deveCalcularMultiplasFaixas() {
+    void calculaMultiplasFaixas() {
         INSS inss = new INSS();
         Funcionario funcionario = new Funcionario("Maria Santos", "987.654.321-00", "Analista", 3000.00);
         
@@ -33,7 +33,7 @@ class INSSTest {
     
     @Test
     @DisplayName("Cenário 3: Validar que o cálculo é limitado ao teto máximo da contribuição para salários que excedem esse valor")
-    void deveAplicarTetoMaximo() {
+    void aplicaTetoMaximo() {
         INSS inss = new INSS();
         Funcionario funcionario = new Funcionario("Pedro Costa", "456.789.123-00", "Analista", 10000.00);
         

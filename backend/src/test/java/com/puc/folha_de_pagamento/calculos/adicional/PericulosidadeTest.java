@@ -11,7 +11,7 @@ class PericulosidadeTest {
     
     @Test
     @DisplayName("Cenário 1: Testar se o valor do adicional é calculado como 30% do salário bruto para um funcionário com direito ao benefício")
-    void deveCalcular30PorcentoDoSalarioBruto() {
+    void calcula30PorcentoDoSalario() {
         Periculosidade periculosidade = new Periculosidade();
         Funcionario funcionario = new Funcionario("João Silva", "123.456.789-00", "Analista", 3000.00);
         funcionario.setTemPericulosidade(true);
@@ -23,7 +23,7 @@ class PericulosidadeTest {
     
     @Test
     @DisplayName("Cenário 2: Validar que o valor do adicional é zero para um funcionário que não tem direito")
-    void deveRetornarZeroQuandoNaoTemDireito() {
+    void retornaZeroSemDireito() {
         Periculosidade periculosidade = new Periculosidade();
         Funcionario funcionario = new Funcionario("Maria Santos", "987.654.321-00", "Analista", 3000.00);
         funcionario.setTemPericulosidade(false);
