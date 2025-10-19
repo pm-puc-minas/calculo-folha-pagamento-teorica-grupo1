@@ -4,6 +4,7 @@ import com.puc.folha_de_pagamento.calculos.CalculoBase;
 import com.puc.folha_de_pagamento.calculos.interfaces.Desconto;
 import com.puc.folha_de_pagamento.model.Funcionario;
 
+//Para as variáveis estáticas, melhor usar uma classe ENUM, não?
 public class INSS extends CalculoBase implements Desconto {
     
     private static final double FAIXA1_LIMITE = 1302.00;

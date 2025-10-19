@@ -1,16 +1,12 @@
 package com.puc.folha_de_pagamento.model;
 
+import java.time.LocalDate;
+
 import com.puc.folha_de_pagamento.calculos.adicional.Insalubridade;
 import com.puc.folha_de_pagamento.calculos.adicional.Periculosidade;
-import com.puc.folha_de_pagamento.calculos.beneficio.FGTS;
-import com.puc.folha_de_pagamento.calculos.beneficio.ValeAlimentacao;
 import com.puc.folha_de_pagamento.calculos.beneficio.ValeTransporte;
 import com.puc.folha_de_pagamento.calculos.desconto.INSS;
 import com.puc.folha_de_pagamento.calculos.desconto.IRRF;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 public class FolhaPagamento {
     
@@ -47,6 +43,7 @@ public class FolhaPagamento {
             totalAdicionais += insalubridade.calcular(funcionario);
         }
         
+        //Não seria melhor usar composição ou agregação nesas classe nesse ponto? FolhaPagamento.INSS?
         INSS inss = new INSS();
         totalDescontos += inss.calcular(funcionario, salarioBruto);
         

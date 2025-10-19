@@ -2,6 +2,7 @@ package com.puc.folha_de_pagamento.model;
 
 import java.time.LocalDate;
 
+// O Funcionario não deveria ter uma JornadaDeTrabalho?
 public class Funcionario {
     
     private String nome;
