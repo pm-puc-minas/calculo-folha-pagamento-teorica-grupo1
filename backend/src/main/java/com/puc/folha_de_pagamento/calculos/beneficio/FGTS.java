@@ -1,10 +1,10 @@
 package com.puc.folha_de_pagamento.calculos.beneficio;
 
 import com.puc.folha_de_pagamento.calculos.CalculoBase;
-import com.puc.folha_de_pagamento.calculos.interfaces.Beneficio;
+import com.puc.folha_de_pagamento.calculos.interfaces.IBeneficio;
 import com.puc.folha_de_pagamento.model.Funcionario;
 
-public class FGTS extends CalculoBase implements Beneficio {
+public class FGTS extends CalculoBase implements IBeneficio {
     
     private static final double PERCENTUAL_FGTS = 0.08;
     

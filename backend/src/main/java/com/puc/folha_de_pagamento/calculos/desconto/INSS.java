@@ -1,25 +1,35 @@
 package com.puc.folha_de_pagamento.calculos.desconto;
 
 import com.puc.folha_de_pagamento.calculos.CalculoBase;
-import com.puc.folha_de_pagamento.calculos.interfaces.Desconto;
+import com.puc.folha_de_pagamento.calculos.interfaces.IDesconto;
 import com.puc.folha_de_pagamento.model.Funcionario;
 
-//Para as variáveis estáticas, melhor usar uma classe ENUM, não?
-public class INSS extends CalculoBase implements Desconto {
-    
-    private static final double FAIXA1_LIMITE = 1302.00;
-    private static final double FAIXA1_ALIQUOTA = 0.075;
-    
-    private static final double FAIXA2_LIMITE = 2571.29;
-    private static final double FAIXA2_ALIQUOTA = 0.09;
-    
-    private static final double FAIXA3_LIMITE = 3856.94;
-    private static final double FAIXA3_ALIQUOTA = 0.12;
-    
-    private static final double FAIXA4_LIMITE = 7507.49;
-    private static final double FAIXA4_ALIQUOTA = 0.14;
+public class INSS extends CalculoBase implements IDesconto {
     
     private static final double TETO_INSS = 877.24;
+    
+    private enum FaixaINSS {
+        FAIXA1(1302.00, 0.075),
+        FAIXA2(2571.29, 0.09),
+        FAIXA3(3856.94, 0.12),
+        FAIXA4(7507.49, 0.14);
+        
+        private final double limite;
+        private final double aliquota;
+        
+        FaixaINSS(double limite, double aliquota) {
+            this.limite = limite;
+            this.aliquota = aliquota;
+        }
+        
+        public double getLimite() {
+            return limite;
+        }
+        
+        public double getAliquota() {
+            return aliquota;
+        }
+    }
     
     @Override
     public double calcular(Funcionario funcionario, double salarioBase) {
@@ -55,35 +65,25 @@ public class INSS extends CalculoBase implements Desconto {
     private double calcularINSS(double salario) {
         double valorCalculado = 0.0;
         
-        boolean primeiraFaixa = salario <= FAIXA1_LIMITE;
-        if (primeiraFaixa) {
-            valorCalculado = salario * FAIXA1_ALIQUOTA;
+        if (salario <= FaixaINSS.FAIXA1.getLimite()) {
+            valorCalculado = salario * FaixaINSS.FAIXA1.getAliquota();
+        } else if (salario <= FaixaINSS.FAIXA2.getLimite()) {
+            double primeiraParte = FaixaINSS.FAIXA1.getLimite() * FaixaINSS.FAIXA1.getAliquota();
+            double segundaParte = (salario - FaixaINSS.FAIXA1.getLimite()) * FaixaINSS.FAIXA2.getAliquota();
+            valorCalculado = primeiraParte + segundaParte;
+        } else if (salario <= FaixaINSS.FAIXA3.getLimite()) {
+            double parte1 = FaixaINSS.FAIXA1.getLimite() * FaixaINSS.FAIXA1.getAliquota();
+            double parte2 = (FaixaINSS.FAIXA2.getLimite() - FaixaINSS.FAIXA1.getLimite()) * FaixaINSS.FAIXA2.getAliquota();
+            double parte3 = (salario - FaixaINSS.FAIXA2.getLimite()) * FaixaINSS.FAIXA3.getAliquota();
+            valorCalculado = parte1 + parte2 + parte3;
+        } else if (salario <= FaixaINSS.FAIXA4.getLimite()) {
+            double calc1 = FaixaINSS.FAIXA1.getLimite() * FaixaINSS.FAIXA1.getAliquota();
+            double calc2 = (FaixaINSS.FAIXA2.getLimite() - FaixaINSS.FAIXA1.getLimite()) * FaixaINSS.FAIXA2.getAliquota();
+            double calc3 = (FaixaINSS.FAIXA3.getLimite() - FaixaINSS.FAIXA2.getLimite()) * FaixaINSS.FAIXA3.getAliquota();
+            double calc4 = (salario - FaixaINSS.FAIXA3.getLimite()) * FaixaINSS.FAIXA4.getAliquota();
+            valorCalculado = calc1 + calc2 + calc3 + calc4;
         } else {
-            boolean segundaFaixa = salario <= FAIXA2_LIMITE;
-            if (segundaFaixa) {
-                double primeiraParte = FAIXA1_LIMITE * FAIXA1_ALIQUOTA;
-                double segundaParte = (salario - FAIXA1_LIMITE) * FAIXA2_ALIQUOTA;
-                valorCalculado = primeiraParte + segundaParte;
-            } else {
-                boolean terceiraFaixa = salario <= FAIXA3_LIMITE;
-                if (terceiraFaixa) {
-                    double parte1 = FAIXA1_LIMITE * FAIXA1_ALIQUOTA;
-                    double parte2 = (FAIXA2_LIMITE - FAIXA1_LIMITE) * FAIXA2_ALIQUOTA;
-                    double parte3 = (salario - FAIXA2_LIMITE) * FAIXA3_ALIQUOTA;
-                    valorCalculado = parte1 + parte2 + parte3;
-                } else {
-                    boolean quartaFaixa = salario <= FAIXA4_LIMITE;
-                    if (quartaFaixa) {
-                        double calc1 = FAIXA1_LIMITE * FAIXA1_ALIQUOTA;
-                        double calc2 = (FAIXA2_LIMITE - FAIXA1_LIMITE) * FAIXA2_ALIQUOTA;
-                        double calc3 = (FAIXA3_LIMITE - FAIXA2_LIMITE) * FAIXA3_ALIQUOTA;
-                        double calc4 = (salario - FAIXA3_LIMITE) * FAIXA4_ALIQUOTA;
-                        valorCalculado = calc1 + calc2 + calc3 + calc4;
-                    } else {
-                        valorCalculado = TETO_INSS;
-                    }
-                }
-            }
+            valorCalculado = TETO_INSS;
         }
         
         return arredondar(valorCalculado);

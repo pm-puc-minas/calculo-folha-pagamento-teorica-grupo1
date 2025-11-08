@@ -1,10 +1,10 @@
 package com.puc.folha_de_pagamento.calculos.adicional;
 
 import com.puc.folha_de_pagamento.calculos.CalculoBase;
-import com.puc.folha_de_pagamento.calculos.interfaces.Adicional;
+import com.puc.folha_de_pagamento.calculos.interfaces.IAdicional;
 import com.puc.folha_de_pagamento.model.Funcionario;
 
-public class Insalubridade extends CalculoBase implements Adicional {
+public class Insalubridade extends CalculoBase implements IAdicional {
     
     @Override
     public double calcular(Funcionario funcionario) {

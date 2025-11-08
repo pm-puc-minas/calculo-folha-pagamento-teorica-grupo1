@@ -1,10 +1,10 @@
 package com.puc.folha_de_pagamento.calculos.beneficio;
 
 import com.puc.folha_de_pagamento.calculos.CalculoBase;
-import com.puc.folha_de_pagamento.calculos.interfaces.Beneficio;
+import com.puc.folha_de_pagamento.calculos.interfaces.IBeneficio;
 import com.puc.folha_de_pagamento.model.Funcionario;
 
-public class ValeAlimentacao extends CalculoBase implements Beneficio {
+public class ValeAlimentacao extends CalculoBase implements IBeneficio {
     
     @Override
     public double calcular(Funcionario funcionario) {

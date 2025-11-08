@@ -1,10 +1,10 @@
 package com.puc.folha_de_pagamento.calculos.desconto;
 
 import com.puc.folha_de_pagamento.calculos.CalculoBase;
-import com.puc.folha_de_pagamento.calculos.interfaces.Desconto;
+import com.puc.folha_de_pagamento.calculos.interfaces.IDesconto;
 import com.puc.folha_de_pagamento.model.Funcionario;
 
-public class IRRF extends CalculoBase implements Desconto {
+public class IRRF extends CalculoBase implements IDesconto {
     
     private static final double FAIXA1_LIMITE = 1903.98;
     

@@ -1,10 +1,10 @@
 package com.puc.folha_de_pagamento.calculos.adicional;
 
 import com.puc.folha_de_pagamento.calculos.CalculoBase;
-import com.puc.folha_de_pagamento.calculos.interfaces.Adicional;
+import com.puc.folha_de_pagamento.calculos.interfaces.IAdicional;
 import com.puc.folha_de_pagamento.model.Funcionario;
 
-public class Periculosidade extends CalculoBase implements Adicional {
+public class Periculosidade extends CalculoBase implements IAdicional {
     
     private static final double PERCENTUAL_PERICULOSIDADE = 0.30;
     
