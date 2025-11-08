@@ -2,20 +2,60 @@ package com.puc.folha_de_pagamento.model;
 
 import java.time.LocalDate;
 
-// O Funcionario não deveria ter uma JornadaDeTrabalho?
+import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "funcionarios")
 public class Funcionario {
     
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    @Column(nullable = false)
     private String nome;
+    
+    @Column(nullable = false, unique = true)
     private String cpf;
+    
+    @Column(nullable = false)
     private String cargo;
+    
+    @Column(nullable = false)
     private double salarioBruto;
+    
+    @Column(nullable = false)
     private LocalDate dataAdmissao;
+    
+    @Column(nullable = false)
     private int numeroDependentes;
+    
+    @Column(nullable = false)
     private boolean temPericulosidade;
+    
+    @Column(nullable = false)
     private boolean temInsalubridade;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private GrauInsalubridade grauInsalubridade;
+    
+    @Column(nullable = false)
     private double valorValeTransporte;
+    
+    @Column(nullable = false)
     private double valorValeAlimentacao;
+    
+    @Embedded
+    private JornadaTrabalho jornadaTrabalho;
     
     public Funcionario() {
         this.dataAdmissao = LocalDate.now();
@@ -25,6 +65,7 @@ public class Funcionario {
         this.grauInsalubridade = GrauInsalubridade.NENHUM;
         this.valorValeTransporte = 0.0;
         this.valorValeAlimentacao = 0.0;
+        this.jornadaTrabalho = new JornadaTrabalho();
     }
     
     public Funcionario(String nome, String cpf, String cargo, double salarioBruto) {
@@ -33,6 +74,29 @@ public class Funcionario {
         this.cpf = cpf;
         this.cargo = cargo;
         this.salarioBruto = salarioBruto;
+    }
+    
+    public Funcionario(String nome, String cpf, String cargo, double salarioBruto, JornadaTrabalho jornadaTrabalho) {
+        this.dataAdmissao = LocalDate.now();
+        this.numeroDependentes = 0;
+        this.temPericulosidade = false;
+        this.temInsalubridade = false;
+        this.grauInsalubridade = GrauInsalubridade.NENHUM;
+        this.valorValeTransporte = 0.0;
+        this.valorValeAlimentacao = 0.0;
+        this.nome = nome;
+        this.cpf = cpf;
+        this.cargo = cargo;
+        this.salarioBruto = salarioBruto;
+        this.jornadaTrabalho = jornadaTrabalho != null ? jornadaTrabalho : new JornadaTrabalho();
+    }
+    
+    public Long getId() {
+        return id;
+    }
+    
+    public void setId(Long id) {
+        this.id = id;
     }
     
     public String getNome() {
@@ -123,6 +187,9 @@ public class Funcionario {
         this.valorValeAlimentacao = valorValeAlimentacao;
     }
     
+    public JornadaTrabalho getJornadaTrabalho() {
+        return jornadaTrabalho;
+    }
     
     public enum GrauInsalubridade {
         NENHUM(0.0),

@@ -1,5 +1,8 @@
 package com.puc.folha_de_pagamento.model;
 
+import jakarta.persistence.Embeddable;
+
+@Embeddable
 public class JornadaTrabalho {
     
     private int horasMensais;
