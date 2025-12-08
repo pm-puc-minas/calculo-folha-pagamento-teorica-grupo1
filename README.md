@@ -8,7 +8,6 @@ A aplicação segue os princípios de modularidade, programação orientada a ob
 O desenvolvimento será realizado em quatro sprints, com o objetivo de entregar uma aplicação completa e funcional.
 
 **Professor:** Paulo Coelho  
-**GitHub:** https://github.com/paulohdscoelho
 
 ### Integrantes do Projeto
 - Matheus Guilherme Viana Pereira  
