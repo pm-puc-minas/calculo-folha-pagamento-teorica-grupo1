@@ -74,3 +74,4 @@ function TabelaFuncionarios({ funcionarios, onEdit, onDelete, onGerarFolha, onVe
 
 export default TabelaFuncionarios;
 
+

@@ -10,15 +10,15 @@ public class JornadaTrabalho {
     private int diasTrabalhados;
     
     public JornadaTrabalho() {
-        this.horasMensais = 200; // 40h/semana × 5 semanas
+        this.horasMensais = 200;
         this.horasDiarias = 8;
         this.diasTrabalhados = 22;
     }
     
     public JornadaTrabalho(int horasMensais, int horasDiarias, int diasTrabalhados) {
-        this.horasMensais = horasMensais;
         this.horasDiarias = horasDiarias;
         this.diasTrabalhados = diasTrabalhados;
+        this.horasMensais = horasDiarias * diasTrabalhados;
     }
     
     public int getHorasMensais() {
@@ -35,6 +35,7 @@ public class JornadaTrabalho {
     
     public void setHorasDiarias(int horasDiarias) {
         this.horasDiarias = horasDiarias;
+        calcularHorasMensais();
     }
     
     public int getDiasTrabalhados() {
@@ -43,6 +44,13 @@ public class JornadaTrabalho {
     
     public void setDiasTrabalhados(int diasTrabalhados) {
         this.diasTrabalhados = diasTrabalhados;
+        calcularHorasMensais();
+    }
+    
+    private void calcularHorasMensais() {
+        if (horasDiarias > 0 && diasTrabalhados > 0) {
+            this.horasMensais = horasDiarias * diasTrabalhados;
+        }
     }
     
     public double calcularSalarioHora(double salarioBruto) {

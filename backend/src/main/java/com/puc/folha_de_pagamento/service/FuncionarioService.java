@@ -110,6 +110,12 @@ public class FuncionarioService {
         if (funcionario.getCpf() == null || funcionario.getCpf().trim().isEmpty()) {
             throw new IllegalArgumentException("CPF do funcionário é obrigatório");
         }
+        if (funcionario.getCargo() == null || funcionario.getCargo().trim().isEmpty()) {
+            throw new IllegalArgumentException("Cargo do funcionário é obrigatório");
+        }
+        if (funcionario.getDataAdmissao() == null) {
+            throw new IllegalArgumentException("Data de admissão é obrigatória");
+        }
         if (funcionario.getSalarioBruto() < 0) {
             throw new IllegalArgumentException("Salário bruto não pode ser negativo");
         }

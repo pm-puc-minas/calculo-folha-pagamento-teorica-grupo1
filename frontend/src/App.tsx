@@ -40,7 +40,6 @@ function App() {
         setUsuarioLogado(data.usuario);
       }
     } catch (error) {
-      // Se não conseguir verificar, mantém desautenticado
     }
   };
 
@@ -55,7 +54,6 @@ function App() {
         method: 'POST',
       });
     } catch (error) {
-      // Ignora erro de logout
     }
     setAutenticado(false);
     setUsuarioLogado(null);
@@ -158,7 +156,7 @@ function App() {
       setLoading(true);
       await apiService.gerarFolhaPagamento(funcionarioId);
       mostrarSucesso('Folha de pagamento gerada com sucesso!');
-      await carregarFolhas(false); // Mostra erro se houver problema
+      await carregarFolhas(false);
       setDialogFolhaOpen(false);
     } catch (error) {
       mostrarErro('Erro ao gerar folha: ' + (error as Error).message);
@@ -190,7 +188,7 @@ function App() {
       }
     } catch (error) {
       mostrarErro('Erro ao buscar folhas: ' + (error as Error).message);
-      setFolhas([]); // Limpa as folhas em caso de erro
+        setFolhas([]);
     } finally {
       setLoading(false);
     }
@@ -200,7 +198,7 @@ function App() {
     try {
       setLoading(true);
       const folhaRecalculada = await apiService.calcularFolha(id);
-      await carregarFolhas(false); // Mostra erro se houver problema
+      await carregarFolhas(false);
       setFolhaDetalhes(folhaRecalculada);
       mostrarSucesso('Folha recalculada com sucesso!');
     } catch (error) {

@@ -63,13 +63,21 @@ function FormularioFuncionario({ funcionario, onSubmit, onCancel, loading }: For
 
     if (name.startsWith('jornada.')) {
       const field = name.split('.')[1];
-      setFormData(prev => ({
-        ...prev,
-        jornadaTrabalho: {
+      setFormData(prev => {
+        const novaJornada = {
           ...prev.jornadaTrabalho,
           [field]: type === 'number' ? parseFloat(value) || 0 : parseInt(value) || 0,
-        },
-      }));
+        };
+        
+        if (field === 'horasDiarias' || field === 'diasTrabalhados') {
+          novaJornada.horasMensais = novaJornada.horasDiarias * novaJornada.diasTrabalhados;
+        }
+        
+        return {
+          ...prev,
+          jornadaTrabalho: novaJornada,
+        };
+      });
     } else {
       setFormData(prev => ({
         ...prev,
@@ -295,8 +303,9 @@ function FormularioFuncionario({ funcionario, onSubmit, onCancel, loading }: For
               onChange={handleChange}
               min="1"
               required
+              readOnly
             />
-            <small>Padrão: 200 horas (40h/semana × 5 semanas)</small>
+            <small>Calculado automaticamente: {formData.jornadaTrabalho.horasDiarias} horas × {formData.jornadaTrabalho.diasTrabalhados} dias = {formData.jornadaTrabalho.horasMensais} horas</small>
           </div>
           <div className="form-group">
             <label htmlFor="horas-diarias">Horas Diárias *</label>
@@ -338,4 +347,5 @@ function FormularioFuncionario({ funcionario, onSubmit, onCancel, loading }: For
 }
 
 export default FormularioFuncionario;
+
 

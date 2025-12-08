@@ -49,11 +49,12 @@ public class FuncionarioDTO {
         Funcionario funcionario = new Funcionario();
         funcionario.setNome(this.nome);
         funcionario.setCpf(this.cpf);
-        funcionario.setCargo(this.cargo);
-        funcionario.setSalarioBruto(this.salarioBruto);
+        funcionario.setCargo(this.cargo != null ? this.cargo : "");
         
         if (this.dataAdmissao != null) {
             funcionario.setDataAdmissao(this.dataAdmissao);
+        } else {
+            funcionario.setDataAdmissao(java.time.LocalDate.now());
         }
         
         funcionario.setNumeroDependentes(this.numeroDependentes);

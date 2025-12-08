@@ -115,3 +115,4 @@ function DialogDetalhes({ open, folha, onClose, onRecalcular }: DialogDetalhesPr
 
 export default DialogDetalhes;
 
+
