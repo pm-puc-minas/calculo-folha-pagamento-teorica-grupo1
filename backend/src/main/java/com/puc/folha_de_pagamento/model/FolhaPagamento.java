@@ -6,11 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.puc.folha_de_pagamento.calculos.adicional.Insalubridade;
-import com.puc.folha_de_pagamento.calculos.adicional.Periculosidade;
-import com.puc.folha_de_pagamento.calculos.beneficio.ValeTransporte;
-import com.puc.folha_de_pagamento.calculos.desconto.INSS;
-import com.puc.folha_de_pagamento.calculos.desconto.IRRF;
+import com.puc.folha_de_pagamento.calculos.factory.CalculoFactory;
 import com.puc.folha_de_pagamento.calculos.interfaces.IAdicional;
 import com.puc.folha_de_pagamento.calculos.interfaces.IBeneficio;
 import com.puc.folha_de_pagamento.calculos.interfaces.IDesconto;
@@ -47,21 +43,6 @@ public class FolhaPagamento {
     private double salarioLiquido;
     
     @Transient
-    private final INSS inss;
-    
-    @Transient
-    private final IRRF irrf;
-    
-    @Transient
-    private final Periculosidade periculosidade;
-    
-    @Transient
-    private final Insalubridade insalubridade;
-    
-    @Transient
-    private final ValeTransporte valeTransporte;
-    
-    @Transient
     private final List<IAdicional> adicionais;
     
     @Transient
@@ -75,12 +56,6 @@ public class FolhaPagamento {
     
     public FolhaPagamento() {
         this.dataReferencia = LocalDate.now();
-        this.inss = new INSS();
-        this.irrf = new IRRF();
-        this.periculosidade = new Periculosidade();
-        this.insalubridade = new Insalubridade();
-        this.valeTransporte = new ValeTransporte();
-        
         this.adicionais = new ArrayList<>();
         this.descontos = new ArrayList<>();
         this.beneficios = new ArrayList<>();
@@ -89,13 +64,10 @@ public class FolhaPagamento {
     }
     
     private void inicializarCalculos() {
-        adicionais.add(periculosidade);
-        adicionais.add(insalubridade);
-        
-        descontos.add(inss);
-        descontos.add(irrf);
-        
-        beneficios.add(valeTransporte);
+        CalculoFactory factory = CalculoFactory.getInstance();
+        this.adicionais.addAll(factory.criarAdicionais());
+        this.descontos.addAll(factory.criarDescontos());
+        this.beneficios.addAll(factory.criarBeneficios());
     }
     
     public FolhaPagamento(Funcionario funcionario) {
@@ -153,6 +125,13 @@ public class FolhaPagamento {
         totalDescontos += descontosBeneficios;
         
         salarioLiquido = salarioBruto + totalAdicionais - totalDescontos;
+        
+        double salarioHora = 0.0;
+        if (funcionario.getJornadaTrabalho() != null) {
+            salarioHora = funcionario.getJornadaTrabalho().calcularSalarioHora(salarioBruto);
+        }
+        
+        detalhamentoCalculos.put("Salário por Hora", salarioHora);
         detalhamentoCalculos.put("Salário Bruto", salarioBruto);
         detalhamentoCalculos.put("Total Adicionais", totalAdicionais);
         detalhamentoCalculos.put("Total Descontos", -totalDescontos);

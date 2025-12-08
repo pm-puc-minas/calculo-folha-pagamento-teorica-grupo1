@@ -39,5 +39,14 @@ public class RegistradorEventos {
             folha.getSalarioLiquido());
         System.out.println(notificacao);
     }
+    
+    public void logFuncionarioDeletado(Funcionario funcionario) {
+        String log = String.format("[%s] LOG: Funcionário deletado - Nome: %s, CPF: %s, Cargo: %s",
+            LocalDateTime.now().format(FORMATTER),
+            funcionario.getNome(),
+            funcionario.getCpf(),
+            funcionario.getCargo());
+        System.out.println(log);
+    }
 }
 

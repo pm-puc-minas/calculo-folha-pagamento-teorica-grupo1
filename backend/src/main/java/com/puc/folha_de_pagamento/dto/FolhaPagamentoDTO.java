@@ -7,6 +7,7 @@ import com.puc.folha_de_pagamento.model.FolhaPagamento;
 
 public class FolhaPagamentoDTO {
     
+    private Long id;
     private FuncionarioDTO funcionario;
     private LocalDate dataReferencia;
     private double salarioBruto;
@@ -20,6 +21,7 @@ public class FolhaPagamentoDTO {
     
     public FolhaPagamentoDTO(FolhaPagamento folha) {
         if (folha != null) {
+            this.id = folha.getId();
             if (folha.getFuncionario() != null) {
                 this.funcionario = new FuncionarioDTO(folha.getFuncionario());
             }
@@ -89,6 +91,14 @@ public class FolhaPagamentoDTO {
     
     public void setDetalhamentoCalculos(Map<String, Double> detalhamentoCalculos) {
         this.detalhamentoCalculos = detalhamentoCalculos;
+    }
+    
+    public Long getId() {
+        return id;
+    }
+    
+    public void setId(Long id) {
+        this.id = id;
     }
 }
 

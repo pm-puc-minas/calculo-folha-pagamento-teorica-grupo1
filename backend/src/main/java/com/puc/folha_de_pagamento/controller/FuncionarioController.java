@@ -31,29 +31,35 @@ public class FuncionarioController {
     }
     
     @PostMapping
-    public ResponseEntity<FuncionarioDTO> cadastrarFuncionario(@RequestBody FuncionarioDTO funcionarioDTO) {
+    public ResponseEntity<?> cadastrarFuncionario(@RequestBody FuncionarioDTO funcionarioDTO) {
         try {
             Funcionario funcionario = funcionarioService.cadastrarFuncionario(funcionarioDTO);
             return ResponseEntity.status(HttpStatus.CREATED)
                 .body(new FuncionarioDTO(funcionario));
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest()
+                .body("{\"erro\": \"" + e.getMessage() + "\"}");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("{\"erro\": \"Erro interno: " + e.getMessage() + "\"}");
         }
     }
     
     @PutMapping("/{id}")
-    public ResponseEntity<FuncionarioDTO> atualizarFuncionario(
+    public ResponseEntity<?> atualizarFuncionario(
             @PathVariable Long id,
             @RequestBody FuncionarioDTO funcionarioDTO) {
         try {
             Funcionario atualizado = funcionarioService.atualizarFuncionario(id, funcionarioDTO);
             return ResponseEntity.ok(new FuncionarioDTO(atualizado));
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest()
+                .body("{\"erro\": \"" + e.getMessage() + "\"}");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("{\"erro\": \"Erro interno: " + e.getMessage() + "\"}");
         }
     }
     
@@ -73,12 +79,17 @@ public class FuncionarioController {
     }
     
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletarFuncionario(@PathVariable Long id) {
+    public ResponseEntity<?> deletarFuncionario(@PathVariable Long id) {
         try {
             funcionarioService.deletarFuncionario(id);
             return ResponseEntity.noContent().build();
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.badRequest()
+                .body("{\"erro\": \"" + e.getMessage() + "\"}");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("{\"erro\": \"Erro interno: " + e.getMessage() + "\"}");
         }
     }
 }

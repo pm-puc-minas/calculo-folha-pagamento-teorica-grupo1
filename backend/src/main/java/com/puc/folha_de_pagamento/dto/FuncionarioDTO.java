@@ -6,6 +6,7 @@ import com.puc.folha_de_pagamento.model.Funcionario;
 
 public class FuncionarioDTO {
     
+    private Long id;
     private String nome;
     private String cpf;
     private String cargo;
@@ -24,6 +25,7 @@ public class FuncionarioDTO {
     
     public FuncionarioDTO(Funcionario funcionario) {
         if (funcionario != null) {
+            this.id = funcionario.getId();
             this.nome = funcionario.getNome();
             this.cpf = funcionario.getCpf();
             this.cargo = funcionario.getCargo();
@@ -49,20 +51,32 @@ public class FuncionarioDTO {
         funcionario.setCpf(this.cpf);
         funcionario.setCargo(this.cargo);
         funcionario.setSalarioBruto(this.salarioBruto);
-        funcionario.setDataAdmissao(this.dataAdmissao);
+        
+        if (this.dataAdmissao != null) {
+            funcionario.setDataAdmissao(this.dataAdmissao);
+        }
+        
         funcionario.setNumeroDependentes(this.numeroDependentes);
         funcionario.setTemPericulosidade(this.temPericulosidade);
         funcionario.setTemInsalubridade(this.temInsalubridade);
-        if (this.grauInsalubridade != null) {
-            funcionario.setGrauInsalubridade(Funcionario.GrauInsalubridade.valueOf(this.grauInsalubridade));
+        
+        if (this.grauInsalubridade != null && !this.grauInsalubridade.isEmpty()) {
+            try {
+                funcionario.setGrauInsalubridade(Funcionario.GrauInsalubridade.valueOf(this.grauInsalubridade));
+            } catch (IllegalArgumentException e) {
+                funcionario.setGrauInsalubridade(Funcionario.GrauInsalubridade.NENHUM);
+            }
         }
+        
         funcionario.setValorValeTransporte(this.valorValeTransporte);
         funcionario.setValorValeAlimentacao(this.valorValeAlimentacao);
-        if (this.jornadaTrabalho != null) {
+        
+        if (this.jornadaTrabalho != null && funcionario.getJornadaTrabalho() != null) {
             funcionario.getJornadaTrabalho().setHorasMensais(this.jornadaTrabalho.getHorasMensais());
             funcionario.getJornadaTrabalho().setHorasDiarias(this.jornadaTrabalho.getHorasDiarias());
             funcionario.getJornadaTrabalho().setDiasTrabalhados(this.jornadaTrabalho.getDiasTrabalhados());
         }
+        
         return funcionario;
     }
     
@@ -160,6 +174,14 @@ public class FuncionarioDTO {
     
     public void setJornadaTrabalho(JornadaTrabalhoDTO jornadaTrabalho) {
         this.jornadaTrabalho = jornadaTrabalho;
+    }
+    
+    public Long getId() {
+        return id;
+    }
+    
+    public void setId(Long id) {
+        this.id = id;
     }
 }
 

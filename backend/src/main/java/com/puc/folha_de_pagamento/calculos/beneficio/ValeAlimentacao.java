@@ -16,7 +16,7 @@ public class ValeAlimentacao extends CalculoBase implements IBeneficio {
         }
         
         double valorPorDia = funcionario.getValorValeAlimentacao();
-        int diasUteisMes = 22;
+        int diasUteisMes = 26;
         
         double resultadoCalculo = valorPorDia * diasUteisMes;
         return arredondar(resultadoCalculo);

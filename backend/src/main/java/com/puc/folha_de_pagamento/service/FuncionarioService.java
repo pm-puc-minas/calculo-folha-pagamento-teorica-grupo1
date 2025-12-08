@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.puc.folha_de_pagamento.dto.FuncionarioDTO;
 import com.puc.folha_de_pagamento.eventos.RegistradorEventos;
 import com.puc.folha_de_pagamento.model.Funcionario;
+import com.puc.folha_de_pagamento.repository.FolhaPagamentoRepository;
 import com.puc.folha_de_pagamento.repository.FuncionarioRepository;
 
 @Service
@@ -17,11 +18,14 @@ import com.puc.folha_de_pagamento.repository.FuncionarioRepository;
 public class FuncionarioService {
     
     private final FuncionarioRepository funcionarioRepository;
+    private final FolhaPagamentoRepository folhaPagamentoRepository;
     private final RegistradorEventos registradorEventos;
     
     @Autowired
-    public FuncionarioService(FuncionarioRepository funcionarioRepository) {
+    public FuncionarioService(FuncionarioRepository funcionarioRepository,
+                              FolhaPagamentoRepository folhaPagamentoRepository) {
         this.funcionarioRepository = funcionarioRepository;
+        this.folhaPagamentoRepository = folhaPagamentoRepository;
         this.registradorEventos = RegistradorEventos.getInstance();
     }
     
@@ -90,10 +94,13 @@ public class FuncionarioService {
     }
     
     public void deletarFuncionario(Long id) {
-        if (!funcionarioRepository.existsById(id)) {
-            throw new IllegalArgumentException("Funcionário não encontrado");
-        }
+        Funcionario funcionario = funcionarioRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Funcionário não encontrado"));
+        
+        folhaPagamentoRepository.deleteAll(folhaPagamentoRepository.findByFuncionarioId(id));
+        
         funcionarioRepository.deleteById(id);
+        registradorEventos.logFuncionarioDeletado(funcionario);
     }
     
     private void validarFuncionario(Funcionario funcionario) {

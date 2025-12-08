@@ -10,7 +10,7 @@ public class JornadaTrabalho {
     private int diasTrabalhados;
     
     public JornadaTrabalho() {
-        this.horasMensais = 220; // Padrão CLT
+        this.horasMensais = 200; // 40h/semana × 5 semanas
         this.horasDiarias = 8;
         this.diasTrabalhados = 22;
     }
